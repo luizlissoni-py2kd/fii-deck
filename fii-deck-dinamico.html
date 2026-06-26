@@ -8,258 +8,156 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#060f1a;--surface:#0d1b2a;--border:#1e3a5f;
-  --text:#c8d8ea;--muted:#5a7a9a;--accent:#2563c4;
-  --gold:#c9a84c;--green:#3bba8a;--red:#e05c5c;--warn:#f0a500;
-}
+:root{--bg:#060f1a;--surface:#0d1b2a;--border:#1e3a5f;--text:#c8d8ea;--muted:#5a7a9a;--accent:#2563c4;--gold:#c9a84c;--green:#3bba8a;--red:#e05c5c;--warn:#f0a500}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-/* ── SEARCH SCREEN ── */
-#search-screen{
-  min-height:100vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;padding:40px 20px;
-}
-.search-logo{
-  width:64px;height:64px;border-radius:16px;
-  background:linear-gradient(135deg,#c9a84c,#8b6914);
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;font-weight:800;color:#fff;margin-bottom:28px;
-}
-.search-title{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;text-align:center}
-.search-sub{font-size:14px;color:var(--muted);margin-bottom:40px;text-align:center}
-.search-box{
-  background:var(--surface);border:2px solid var(--border);
-  border-radius:16px;padding:28px 32px;width:100%;max-width:520px;
-}
-.search-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
-.input-row{display:flex;gap:10px}
-.ticker-input{
-  flex:1;background:#060f1a;border:1px solid var(--border);
-  border-radius:10px;padding:14px 18px;font-size:20px;
-  font-family:'JetBrains Mono',monospace;font-weight:700;
-  color:var(--gold);letter-spacing:2px;text-transform:uppercase;
-  outline:none;transition:border .2s;
-}
+/* SEARCH */
+#search-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+.search-logo{width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,#c9a84c,#8b6914);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:24px}
+.search-title{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;text-align:center}
+.search-sub{font-size:13px;color:var(--muted);margin-bottom:36px;text-align:center}
+.search-box{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:500px}
+.slbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+.input-row{display:flex;gap:10px;margin-bottom:6px}
+.ticker-input{flex:1;background:#060f1a;border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:22px;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;outline:none;transition:border .2s}
 .ticker-input:focus{border-color:var(--gold)}
-.ticker-input::placeholder{color:#2a4a6a;letter-spacing:1px;font-size:15px;font-weight:400}
-.btn-load{
-  background:linear-gradient(135deg,#c9a84c,#8b6914);
-  border:none;border-radius:10px;padding:14px 24px;
-  font-size:14px;font-weight:700;color:#fff;cursor:pointer;
-  font-family:'Inter',sans-serif;transition:opacity .2s;white-space:nowrap;
-}
-.btn-load:hover{opacity:.85}
+.ticker-input::placeholder{color:#2a4a6a;letter-spacing:1px;font-size:14px;font-weight:400}
+.btn-load{background:linear-gradient(135deg,#c9a84c,#8b6914);border:none;border-radius:10px;padding:14px 20px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
 .btn-load:disabled{opacity:.4;cursor:not-allowed}
-.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.sug-chip{
-  background:#0d2040;border:1px solid var(--border);
-  border-radius:6px;padding:5px 12px;font-size:12px;
-  font-family:'JetBrains Mono',monospace;color:var(--muted);
-  cursor:pointer;transition:all .15s;
-}
-.sug-chip:hover{border-color:var(--gold);color:var(--gold)}
-.error-msg{color:var(--red);font-size:13px;margin-top:14px;display:none}
-.loading-msg{color:var(--muted);font-size:13px;margin-top:14px;display:none;text-align:center}
-.loading-dots span{animation:blink 1.2s infinite}
-.loading-dots span:nth-child(2){animation-delay:.2s}
-.loading-dots span:nth-child(3){animation-delay:.4s}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.sug{background:#0d2040;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--muted);cursor:pointer;transition:all .15s}
+.sug:hover{border-color:var(--gold);color:var(--gold)}
+.err{color:var(--red);font-size:13px;margin-top:10px;display:none}
+.ld{color:var(--muted);font-size:13px;margin-top:10px;display:none;text-align:center}
+.ld span{animation:blink 1.2s infinite}.ld span:nth-child(2){animation-delay:.2s}.ld span:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,80%,100%{opacity:0}40%{opacity:1}}
 
-/* ── DASHBOARD ── */
+/* DASHBOARD */
 #dashboard{display:none}
-.header{
-  background:linear-gradient(135deg,#0a1628,#0d1f3c);
-  border-bottom:1px solid var(--border);
-  padding:16px 24px;display:flex;align-items:center;
-  justify-content:space-between;flex-wrap:wrap;gap:12px;
-}
-.fund-id{display:flex;align-items:center;gap:14px}
-.fund-logo{
-  width:46px;height:46px;border-radius:11px;
-  background:linear-gradient(135deg,#c9a84c,#8b6914);
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;font-weight:800;color:#fff;flex-shrink:0;
-}
-.fund-name{font-size:20px;font-weight:800;letter-spacing:-0.4px}
-.fund-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.header-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.price-now{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700}
-.delta-badge{font-size:12px;font-weight:700;margin-left:8px}
-.price-time{font-size:10px;color:var(--muted);margin-top:2px;text-align:right}
-.dy-box{background:#0d2040;border:1px solid #c9a84c33;border-radius:10px;padding:10px 16px;text-align:center}
-.dy-val{font-size:20px;font-weight:800;color:var(--gold)}
-.dy-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
-.btn-back{
-  background:#0d2040;border:1px solid var(--border);
-  color:var(--muted);padding:7px 14px;border-radius:8px;
-  cursor:pointer;font-size:12px;font-family:'Inter',sans-serif;
-  transition:all .15s;
-}
-.btn-back:hover{color:var(--text);border-color:var(--text)}
+.header{background:linear-gradient(135deg,#0a1628,#0d1f3c);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.hlogo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#8b6914);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0}
+.hname{font-size:20px;font-weight:800;letter-spacing:-0.4px}
+.hsub{font-size:11px;color:var(--muted);margin-top:1px}
+.hright{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hprice{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700}
+.hdelta{font-size:12px;font-weight:700;margin-left:8px}
+.htime{font-size:10px;color:var(--muted);margin-top:2px;text-align:right}
+.dybox{background:#0d2040;border:1px solid #c9a84c33;border-radius:10px;padding:8px 14px;text-align:center}
+.dyval{font-size:20px;font-weight:800;color:var(--gold)}
+.dylbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+.btnback{background:#0d2040;border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:'Inter',sans-serif}
 
-/* REFRESH BAR */
-.refresh-bar{
-  background:#060f1a;border-bottom:1px solid #1e3a5f22;
-  padding:7px 24px;display:flex;align-items:center;
-  justify-content:space-between;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:8px;
-}
-.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px;animation:pulse 2s infinite}
+.rbar{background:#060f1a;border-bottom:1px solid #1e3a5f22;padding:6px 20px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:6px}
+.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:5px;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.btn-refresh{
-  background:#0d2040;border:1px solid var(--border);color:var(--gold);
-  padding:4px 12px;border-radius:6px;cursor:pointer;
-  font-size:11px;font-weight:600;font-family:'Inter',sans-serif;
-}
-.btn-refresh:hover{background:#1e3a5f}
+.btnref{background:#0d2040;border:1px solid var(--border);color:var(--gold);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;font-family:'Inter',sans-serif}
 
-/* TABS */
-.tabs{background:#0a1220;border-bottom:1px solid var(--border);padding:8px 24px;display:flex;gap:4px;flex-wrap:wrap}
-.tab{background:transparent;border:none;cursor:pointer;padding:7px 15px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);font-family:'Inter',sans-serif;transition:all .15s}
-.tab:hover{color:var(--text)}
-.tab.active{background:#0d2040;color:var(--gold)}
+.tabs{background:#0a1220;border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:4px;flex-wrap:wrap}
+.tab{background:transparent;border:none;cursor:pointer;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);font-family:'Inter',sans-serif;transition:all .15s}
+.tab:hover{color:var(--text)}.tab.active{background:#0d2040;color:var(--gold)}
 
-/* MAIN */
-.main{padding:20px 24px}
+.main{padding:18px 20px}
 .panel{display:none}.panel.active{display:block}
 
-/* GRID */
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px}
-@media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.g4,.g3,.g2{grid-template-columns:1fr}}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:800px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.g4,.g3,.g2{grid-template-columns:1fr}}
 
-/* CARD */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-.c-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.c-val{font-size:20px;font-weight:700}
-.c-sub{font-size:11px;color:var(--muted);margin-top:4px}
-.pos{color:var(--green)}.neg{color:var(--red)}.warn{color:var(--warn)}.acc{color:var(--accent)}
+.clbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.cval{font-size:20px;font-weight:700}
+.csub{font-size:11px;color:var(--muted);margin-top:4px}
+.pos{color:var(--green)}.neg{color:var(--red)}.wrn{color:var(--warn)}.acc{color:var(--accent)}
 
-/* CHART BOX */
-.cbox{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px}
-.cbox-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.cbox{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px}
+.cbox-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:6px}
 .cbox-title{font-size:13px;font-weight:700}
 .cbox-sub{font-size:11px;color:var(--muted);margin-top:2px}
 .cbox-badge{font-size:13px;font-weight:700;color:var(--gold)}
 
-/* ALERTS */
-.alert{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:8px;margin-bottom:8px;font-size:13px;line-height:1.5}
-.al-ok{background:#3bba8a10;border:1px solid #3bba8a30;color:var(--text)}
-.al-warn{background:#f0a50010;border:1px solid #f0a50030;color:var(--text)}
-.al-danger{background:#e05c5c10;border:1px solid #e05c5c30;color:var(--text)}
+.alert{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border-radius:8px;margin-bottom:8px;font-size:13px;line-height:1.5}
+.al-ok{background:#3bba8a10;border:1px solid #3bba8a30}.al-warn{background:#f0a50010;border:1px solid #f0a50030}.al-danger{background:#e05c5c10;border:1px solid #e05c5c30}
 .al-icon{flex-shrink:0;font-weight:800;font-size:14px;margin-top:1px}
 .al-ok .al-icon{color:var(--green)}.al-warn .al-icon{color:var(--warn)}.al-danger .al-icon{color:var(--red)}
 
-/* TABLE */
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{text-align:left;padding:7px 6px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);border-bottom:1px solid var(--border)}
 td{padding:9px 6px;border-bottom:1px solid #1e3a5f18;vertical-align:middle}
 .mono{font-family:'JetBrains Mono',monospace;font-size:12px}
-
-/* CHIP */
 .chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
-.ch-ok{background:#3bba8a20;color:var(--green)}
-.ch-warn{background:#f0a50020;color:var(--warn)}
-.ch-danger{background:#e05c5c20;color:var(--red)}
+.ch-ok{background:#3bba8a20;color:var(--green)}.ch-warn{background:#f0a50020;color:var(--warn)}.ch-danger{background:#e05c5c20;color:var(--red)}
 
-/* SEMA */
 .sema{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #1e3a5f20}
 .sema-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.sema-kpi{font-size:12px;font-weight:600;color:var(--gold);min-width:170px}
+.sema-kpi{font-size:12px;font-weight:600;color:var(--gold);min-width:160px}
 .sema-desc{font-size:12px;color:#8aa4c0}
 
-/* NOTE */
 .note{background:#0d1f3c;border:1px dashed var(--border);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--muted);margin-top:14px}
+.footer{border-top:1px solid var(--border);padding:10px 20px;display:flex;justify-content:space-between;font-size:10px;color:#3a5a7a;flex-wrap:wrap;gap:6px}
 
-/* SECTION LABEL */
-.slbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-
-/* GAUGE */
-.gauge-wrap{text-align:center;padding:12px}
-.gauge-sub{font-size:10px;color:var(--muted);margin-top:4px}
-
-/* FOOTER */
-.footer{border-top:1px solid var(--border);padding:10px 24px;display:flex;justify-content:space-between;font-size:10px;color:#3a5a7a;flex-wrap:wrap;gap:6px}
+/* DATA TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
+.data-table th{background:#0d1b2a;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);border-bottom:2px solid var(--border)}
+.data-table td{padding:9px 10px;border-bottom:1px solid #1e3a5f20}
+.data-table tr:hover td{background:#0d2040}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════
-     SEARCH SCREEN
-═══════════════════════════════════════════════════════════ -->
+<!-- SEARCH SCREEN -->
 <div id="search-screen">
   <div class="search-logo">📊</div>
   <div class="search-title">Deck de Monitoramento FII</div>
-  <div class="search-sub">Carteira Luiz &amp; Flávia · Dados ao vivo via Mais Retorno</div>
-
+  <div class="search-sub">Carteira Luiz &amp; Flávia · Dados ao vivo via Brapi</div>
   <div class="search-box">
-    <div class="search-label">Digite o ticker do FII</div>
+    <div class="slbl">Digite o ticker do FII</div>
     <div class="input-row">
-      <input id="ticker-input" class="ticker-input" type="text"
-             placeholder="ex: BTLG11, KNCR11…" maxlength="8"
-             onkeydown="if(event.key==='Enter') loadTicker()">
+      <input id="ticker-input" class="ticker-input" type="text" placeholder="ex: BTLG11, KNCR11…" maxlength="8" onkeydown="if(event.key==='Enter')loadTicker()">
       <button class="btn-load" id="btn-load" onclick="loadTicker()">Carregar →</button>
     </div>
-    <div class="error-msg" id="error-msg">❌ Ticker não encontrado. Verifique e tente novamente.</div>
-    <div class="loading-msg" id="loading-msg">
-      Buscando dados<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
-    </div>
-    <div class="suggestions">
+    <div class="err" id="err">❌ Ticker não encontrado. Verifique e tente novamente.</div>
+    <div class="ld" id="ld">Buscando dados<span>.</span><span>.</span><span>.</span></div>
+    <div class="suggestions" style="margin-top:20px">
       <div class="slbl" style="width:100%;margin-bottom:4px">Sugestões rápidas</div>
-      <span class="sug-chip" onclick="quickLoad('BTLG11')">BTLG11</span>
-      <span class="sug-chip" onclick="quickLoad('KNCR11')">KNCR11</span>
-      <span class="sug-chip" onclick="quickLoad('HGLG11')">HGLG11</span>
-      <span class="sug-chip" onclick="quickLoad('XPLG11')">XPLG11</span>
-      <span class="sug-chip" onclick="quickLoad('MXRF11')">MXRF11</span>
-      <span class="sug-chip" onclick="quickLoad('CPTS11')">CPTS11</span>
-      <span class="sug-chip" onclick="quickLoad('HGCR11')">HGCR11</span>
-      <span class="sug-chip" onclick="quickLoad('VISC11')">VISC11</span>
-      <span class="sug-chip" onclick="quickLoad('BCRI11')">BCRI11</span>
+      <span class="sug" onclick="quickLoad('BTLG11')">BTLG11</span>
+      <span class="sug" onclick="quickLoad('KNCR11')">KNCR11</span>
+      <span class="sug" onclick="quickLoad('HGLG11')">HGLG11</span>
+      <span class="sug" onclick="quickLoad('XPLG11')">XPLG11</span>
+      <span class="sug" onclick="quickLoad('MXRF11')">MXRF11</span>
+      <span class="sug" onclick="quickLoad('HGCR11')">HGCR11</span>
+      <span class="sug" onclick="quickLoad('VISC11')">VISC11</span>
+      <span class="sug" onclick="quickLoad('BCRI11')">BCRI11</span>
+      <span class="sug" onclick="quickLoad('CPTS11')">CPTS11</span>
+      <span class="sug" onclick="quickLoad('RBRF11')">RBRF11</span>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     DASHBOARD
-═══════════════════════════════════════════════════════════ -->
+<!-- DASHBOARD -->
 <div id="dashboard">
-
-  <!-- HEADER -->
   <div class="header">
-    <div class="fund-id">
-      <div class="fund-logo" id="h-logo">F</div>
-      <div>
-        <div class="fund-name" id="h-name">—</div>
-        <div class="fund-sub" id="h-sub">—</div>
-      </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="hlogo" id="h-logo">F</div>
+      <div><div class="hname" id="h-name">—</div><div class="hsub" id="h-sub">—</div></div>
     </div>
-    <div class="header-right">
-      <button class="btn-back" onclick="goBack()">← Outro ticker</button>
+    <div class="hright">
+      <button class="btnback" onclick="goBack()">← Outro ticker</button>
       <div>
-        <div>
-          <span class="price-now" id="h-price">—</span>
-          <span class="delta-badge" id="h-delta">—</span>
-        </div>
-        <div class="price-time" id="h-time">—</div>
+        <div><span class="hprice" id="h-price">—</span><span class="hdelta" id="h-delta">—</span></div>
+        <div class="htime" id="h-time">—</div>
       </div>
-      <div class="dy-box">
-        <div class="dy-val" id="h-dy">—</div>
-        <div class="dy-lbl">DY 12m est.</div>
-      </div>
+      <div class="dybox"><div class="dyval" id="h-dy">—</div><div class="dylbl">DY 12m</div></div>
     </div>
   </div>
 
-  <!-- REFRESH BAR -->
-  <div class="refresh-bar">
-    <div><span class="pulse"></span><span id="rb-txt">Dados carregados ao vivo · Mais Retorno API</span></div>
-    <button class="btn-refresh" onclick="reloadCurrent()">⟳ Atualizar</button>
+  <div class="rbar">
+    <div><span class="pulse"></span><span id="rb-txt">Dados carregados via Brapi · B3</span></div>
+    <button class="btnref" onclick="reloadCurrent()">⟳ Atualizar</button>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
     <button class="tab active" onclick="showTab('vitais',this)">⚡ Sinais Vitais</button>
     <button class="tab" onclick="showTab('performance',this)">📈 Performance</button>
@@ -267,152 +165,109 @@ td{padding:9px 6px;border-bottom:1px solid #1e3a5f18;vertical-align:middle}
     <button class="tab" onclick="showTab('alertas',this)">🚨 Alertas</button>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
-
-    <!-- ─ VITAIS ─ -->
     <div class="panel active" id="panel-vitais">
       <div class="g4" id="vitais-kpis"></div>
       <div class="cbox">
         <div class="cbox-head">
-          <div>
-            <div class="cbox-title">Evolução da Cota · 12 meses</div>
-            <div class="cbox-sub">Dados ajustados · Mais Retorno</div>
-          </div>
+          <div><div class="cbox-title">Evolução da Cota · 52 semanas</div><div class="cbox-sub">Preços históricos · Brapi / B3</div></div>
           <div class="cbox-badge" id="acum-badge">—</div>
         </div>
-        <canvas id="cotacaoChart" height="190"></canvas>
+        <canvas id="cotacaoChart" height="200"></canvas>
       </div>
       <div class="g3" id="vitais-info"></div>
     </div>
 
-    <!-- ─ PERFORMANCE ─ -->
     <div class="panel" id="panel-performance">
       <div class="g3" id="perf-top"></div>
       <div class="cbox">
         <div class="cbox-head">
-          <div>
-            <div class="cbox-title">Retornos Mensais</div>
-            <div class="cbox-sub" id="perf-sub">—</div>
-          </div>
+          <div><div class="cbox-title">Histórico de Preço</div><div class="cbox-sub" id="perf-sub">52 semanas</div></div>
           <div id="perf-badge" style="font-size:12px;color:var(--muted)"></div>
         </div>
-        <canvas id="mensaisChart" height="190"></canvas>
+        <canvas id="perfChart" height="200"></canvas>
       </div>
       <div class="g4" id="perf-bottom"></div>
     </div>
 
-    <!-- ─ RISCO ─ -->
     <div class="panel" id="panel-risco">
-      <div class="slbl">Métricas de Risco · janela 3 meses</div>
-      <div class="g3" id="risco-gauges"></div>
-      <div class="card" style="margin-bottom:18px" id="risco-semas"></div>
+      <div class="slbl" style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Indicadores de Risco · dados B3</div>
+      <div class="g3" id="risco-cards"></div>
+      <div class="card" id="risco-semas" style="margin-bottom:16px"></div>
       <div class="g2" id="risco-bottom"></div>
-      <div class="note" id="risco-note"></div>
+      <div class="note">ℹ️ Sharpe e Sortino completos disponíveis no Mais Retorno com plano pago. Os indicadores abaixo são calculados a partir do histórico de preços disponível via Brapi (B3).</div>
     </div>
 
-    <!-- ─ ALERTAS ─ -->
     <div class="panel" id="panel-alertas">
-      <div class="slbl">Status dos Gatilhos</div>
+      <div class="slbl" style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Status dos Gatilhos</div>
       <div id="alertas-list"></div>
-      <div style="height:20px"></div>
-      <div class="slbl">Tabela de Limites por KPI</div>
-      <div class="card" style="margin-bottom:18px">
-        <table id="alertas-table">
-          <tr>
-            <th>KPI</th><th>Atual</th><th>⚠ Atenção</th><th>✕ Crítico</th><th>Status</th>
-          </tr>
-        </table>
-      </div>
-      <div class="slbl">Frequência de Monitoramento</div>
+      <div style="height:18px"></div>
+      <div class="slbl" style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Tabela de Limites</div>
+      <div class="card" style="margin-bottom:16px"><table id="alertas-table"></table></div>
+      <div class="slbl" style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Frequência de Monitoramento</div>
       <div class="g3">
-        <div class="card"><div class="slbl">⚡ Diário</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.9">· Cotação e variação diária<br>· Volume negociado<br>· P/VP estimado</div></div>
-        <div class="card"><div class="slbl">📅 Mensal</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.9">· Rendimento distribuído (R$/cota)<br>· DY acumulado 12M<br>· Vacância (relatório do gestor)<br>· Novos contratos e renovações</div></div>
-        <div class="card"><div class="slbl">🔭 Trimestral</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.9">· Sharpe &amp; Sortino<br>· Acumulado vs IFIX / CDI<br>· NOI e receita imobiliária<br>· Duration dos contratos</div></div>
+        <div class="card"><div class="slbl">⚡ Diário</div><div style="font-size:12px;color:var(--muted);line-height:2">· Cotação e variação<br>· Volume negociado<br>· P/VP estimado</div></div>
+        <div class="card"><div class="slbl">📅 Mensal</div><div style="font-size:12px;color:var(--muted);line-height:2">· Rendimento (R$/cota)<br>· DY acumulado 12M<br>· Vacância (rel. gestor)<br>· Novos contratos</div></div>
+        <div class="card"><div class="slbl">🔭 Trimestral</div><div style="font-size:12px;color:var(--muted);line-height:2">· Sharpe &amp; Sortino<br>· Acumulado vs IFIX<br>· NOI e receita<br>· Duration contratos</div></div>
       </div>
     </div>
-
-  </div><!-- /main -->
+  </div>
 
   <div class="footer">
-    <span>Fonte: Mais Retorno API · B3 · Funds Explorer · Status Invest</span>
+    <span>Fonte: Brapi · B3 · Funds Explorer · Status Invest</span>
     <span>Deck FII · Carteira Luiz &amp; Flávia</span>
     <span id="footer-ts">—</span>
   </div>
-</div><!-- /dashboard -->
+</div>
 
 <script>
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// API: BRAPI (gratuita, sem CORS, sem auth)
+// ══════════════════════════════════════════════
+const BRAPI = 'https://brapi.dev/api';
+
+async function fetchQuote(ticker) {
+  const url = `${BRAPI}/quote/${ticker}?range=1y&interval=1wk&fundamental=true&token=guest`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('not found');
+  const d = await r.json();
+  if (!d.results || !d.results[0]) throw new Error('not found');
+  return d.results[0];
+}
+
+// ══════════════════════════════════════════════
 // STATE
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 let currentTicker = '';
-let chartCota = null, chartMens = null;
-let state = {};
+let chartCota = null, chartPerf = null;
+let S = {}; // state
 
-// ════════════════════════════════════════════════════════════
-// API HELPERS
-// ════════════════════════════════════════════════════════════
-const BASE = 'https://data.maisretorno.com/mr-data/v4';
-
-async function apiGet(path) {
-  const r = await fetch(BASE + path, { headers: { 'Accept': 'application/json' } });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  return r.json();
-}
-
-async function fetchAll(ticker) {
-  const t = ticker.toLowerCase();
-  const id = `${t}:b3`;
-  const [info, stats, quotes] = await Promise.all([
-    apiGet(`/assets/${encodeURIComponent(id)}/info`),
-    apiGet(`/assets/${encodeURIComponent(id)}/stats?details=true`),
-    apiGet(`/assets/${encodeURIComponent(id)}/quotes?start_date=${oneYearAgo()}&end_date=${today()}`)
-  ]);
-  return { info, stats, quotes };
-}
-
-function today() {
-  return new Date().toISOString().slice(0,10);
-}
-function oneYearAgo() {
-  const d = new Date(); d.setFullYear(d.getFullYear()-1);
-  return d.toISOString().slice(0,10);
-}
-
-// ════════════════════════════════════════════════════════════
-// LOAD TICKER
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// LOAD
+// ══════════════════════════════════════════════
 async function loadTicker() {
-  const inp = document.getElementById('ticker-input');
-  const ticker = inp.value.trim().toUpperCase();
-  if (!ticker) return;
-  await doLoad(ticker);
+  const t = document.getElementById('ticker-input').value.trim().toUpperCase();
+  if (!t) return;
+  await doLoad(t);
 }
-
-async function quickLoad(ticker) {
-  document.getElementById('ticker-input').value = ticker;
-  await doLoad(ticker);
+async function quickLoad(t) {
+  document.getElementById('ticker-input').value = t;
+  await doLoad(t);
 }
-
 async function doLoad(ticker) {
-  const errEl = document.getElementById('error-msg');
-  const ldEl  = document.getElementById('loading-msg');
+  const errEl = document.getElementById('err');
+  const ldEl  = document.getElementById('ld');
   const btn   = document.getElementById('btn-load');
   errEl.style.display = 'none';
   ldEl.style.display  = 'block';
   btn.disabled = true;
-
   try {
-    const data = await fetchAll(ticker);
-    state = buildState(ticker, data);
+    const data = await fetchQuote(ticker);
+    S = buildState(ticker, data);
     currentTicker = ticker;
-    renderDashboard();
+    renderAll();
     document.getElementById('search-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
-    // force vitais tab
     showTab('vitais', document.querySelector('.tab'));
   } catch(e) {
     errEl.style.display = 'block';
@@ -421,118 +276,86 @@ async function doLoad(ticker) {
     btn.disabled = false;
   }
 }
-
-function reloadCurrent() {
-  if (currentTicker) doLoad(currentTicker);
-}
-
+function reloadCurrent() { if (currentTicker) doLoad(currentTicker); }
 function goBack() {
   document.getElementById('search-screen').style.display = 'flex';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('ticker-input').value = '';
 }
 
-// ════════════════════════════════════════════════════════════
-// BUILD STATE FROM API DATA
-// ════════════════════════════════════════════════════════════
-function buildState(ticker, { info, stats, quotes }) {
-  const s = stats.stats || {};
-  const tf = s.timeframe || {};
-  const m3 = tf.last_3_months || {};
-  const m6 = tf.last_6_months || {};
-  const ytd = tf.ytd || {};
-  const begin = tf.begin || {};
-  const mtd = tf.mtd || {};
+// ══════════════════════════════════════════════
+// BUILD STATE
+// ══════════════════════════════════════════════
+function buildState(ticker, q) {
+  const hist = q.historicalDataPrice || [];
+  const prices = hist.map(h => ({ d: new Date(h.date * 1000).toISOString().slice(0,10), c: +(h.close||0).toFixed(2) })).filter(p => p.c > 0);
 
-  // quotes: pick monthly (last trading day each month)
-  const allQ = (quotes.quotes || []);
-  const monthly = monthlyQuotes(allQ);
-  const latestQ = allQ.length ? allQ[allQ.length-1] : null;
-  const prevMonthQ = allQ.length > 22 ? allQ[allQ.length-22] : allQ[0];
+  const cotAtual   = q.regularMarketPrice || 0;
+  const cotPrev    = q.regularMarketPreviousClose || cotAtual;
+  const varDia     = cotPrev ? (cotAtual - cotPrev) / cotPrev * 100 : 0;
+  const cotMin52   = q.fiftyTwoWeekLow || 0;
+  const cotMax52   = q.fiftyTwoWeekHigh || 0;
+  const volume     = q.regularMarketVolume || 0;
+  const mktCap     = q.marketCap || 0;
+  const pvp        = q.priceToBook || null;
+  const dy12m      = q.dividendYield || null;
 
-  const cotacaoAtual = latestQ ? latestQ.c : 0;
-  const cotacaoPrevDay = allQ.length > 1 ? allQ[allQ.length-2].c : cotacaoAtual;
-  const varDia = cotacaoPrevDay ? (cotacaoAtual - cotacaoPrevDay) / cotacaoPrevDay * 100 : 0;
-  const acum = begin.profitability || 0;
-  const ytdVal = ytd.profitability || 0;
-  const mtdVal = mtd.profitability || 0;
-  const m3Val  = m3.profitability || 0;
-  const m6Val  = m6.profitability || 0;
+  // calc from history
+  const firstPrice = prices.length ? prices[0].c : cotAtual;
+  const acum52w    = firstPrice ? (cotAtual - firstPrice) / firstPrice * 100 : 0;
 
-  // monthly returns from years object
-  const yearsData = stats.years || {};
-  const monthRets = buildMonthlyRets(yearsData);
+  // volatility from weekly returns
+  let vol = null;
+  if (prices.length > 4) {
+    const rets = [];
+    for (let i = 1; i < prices.length; i++) {
+      if (prices[i-1].c > 0) rets.push((prices[i].c - prices[i-1].c) / prices[i-1].c);
+    }
+    const mean = rets.reduce((a,b) => a+b, 0) / rets.length;
+    const variance = rets.reduce((a,b) => a + Math.pow(b-mean,2), 0) / rets.length;
+    vol = Math.sqrt(variance) * Math.sqrt(52) * 100; // annualized
+  }
 
-  const posMonths = s.positive_months || 0;
-  const negMonths = s.negative_months || 0;
-  const totalMonths = posMonths + negMonths;
-  const bestMonth = s.best_monthly_return || 0;
-  const worstMonth = s.worst_monthly_return || 0;
+  // max drawdown
+  let maxDD = 0, peak = prices[0]?.c || 0;
+  for (const p of prices) {
+    if (p.c > peak) peak = p.c;
+    const dd = peak > 0 ? (p.c - peak) / peak * 100 : 0;
+    if (dd < maxDD) maxDD = dd;
+  }
 
-  const sharpe3m = m3.sharpe_ratio;
-  const sortino3m = m3.sortino_ratio;
-  const vol3m = m3.volatility;
-
-  // DY estimate: assume ~monthly DY from MTD or annualized from 12m
-  const dyEst = acum > 0 ? (acum * 0.65).toFixed(1) + '%' : '—';
-
-  // P/VP: not in API — show placeholder
-  const pvp = null;
+  // dist from 52w high/low
+  const distMax = cotMax52 > 0 ? (cotAtual - cotMax52) / cotMax52 * 100 : null;
+  const distMin = cotMin52 > 0 ? (cotAtual - cotMin52) / cotMin52 * 100 : null;
 
   return {
-    ticker, info, stats,
-    cotacaoAtual, cotacaoPrevDay, varDia, acum, ytdVal, mtdVal, m3Val, m6Val,
-    monthRets, posMonths, negMonths, totalMonths, bestMonth, worstMonth,
-    sharpe3m, sortino3m, vol3m,
-    allQ, monthly, latestQ,
-    dyEst, pvp,
-    nicename: stats.nicename || ticker,
-    lastQuote: stats.stats?.last_quote_date || today(),
+    ticker, q, prices, cotAtual, cotPrev, varDia,
+    cotMin52, cotMax52, volume, mktCap, pvp, dy12m,
+    acum52w, vol, maxDD, distMax, distMin,
+    longName: q.longName || q.shortName || ticker,
+    currency: q.currency || 'BRL',
+    lastUpdate: q.regularMarketTime ? new Date(q.regularMarketTime*1000).toLocaleString('pt-BR') : '—',
   };
 }
 
-function monthlyQuotes(quotes) {
-  const seen = {};
-  const out = [];
-  for (const q of quotes) {
-    const ym = q.d.slice(0,7);
-    seen[ym] = q; // overwrite → last day of month
-  }
-  return Object.values(seen).sort((a,b) => a.d.localeCompare(b.d));
-}
-
-function buildMonthlyRets(years) {
-  const ptMonths = {1:'Jan',2:'Fev',3:'Mar',4:'Abr',5:'Mai',6:'Jun',7:'Jul',8:'Ago',9:'Set',10:'Out',11:'Nov',12:'Dez'};
-  const out = [];
-  for (const [year, months] of Object.entries(years).sort()) {
-    for (const [m, v] of Object.entries(months)) {
-      if (m === 'year' || m === 'accrued') continue;
-      out.push({ label: `${ptMonths[+m]}/${String(year).slice(2)}`, ret: v });
-    }
-  }
-  return out;
-}
-
-// ════════════════════════════════════════════════════════════
-// RENDER DASHBOARD
-// ════════════════════════════════════════════════════════════
-function renderDashboard() {
-  const d = state;
-  const ticker = d.ticker;
-
+// ══════════════════════════════════════════════
+// RENDER ALL
+// ══════════════════════════════════════════════
+function renderAll() {
+  const d = S;
   // header
-  document.getElementById('h-logo').textContent = ticker[0];
-  document.getElementById('h-name').textContent = ticker;
-  document.getElementById('h-sub').textContent = (d.nicename || '').replace(ticker,'').replace('- ','').trim() || 'FII · B3';
-  document.getElementById('h-price').textContent = `R$ ${d.cotacaoAtual.toFixed(2)}`;
+  document.getElementById('h-logo').textContent = d.ticker[0];
+  document.getElementById('h-name').textContent = d.ticker;
+  document.getElementById('h-sub').textContent  = d.longName;
+  document.getElementById('h-price').textContent = `R$ ${d.cotAtual.toFixed(2)}`;
   const dEl = document.getElementById('h-delta');
-  dEl.textContent = `${d.varDia >= 0 ? '▲' : '▼'} ${Math.abs(d.varDia).toFixed(2)}% dia`;
-  dEl.className = 'delta-badge ' + (d.varDia >= 0 ? 'pos' : 'neg');
-  document.getElementById('h-time').textContent = `Última cota: ${fmtDate(d.lastQuote)}`;
-  document.getElementById('h-dy').textContent = d.dyEst;
-  document.getElementById('rb-txt').textContent = `Dados carregados ao vivo · ${new Date().toLocaleString('pt-BR')}`;
-  document.getElementById('footer-ts').textContent = `Atualizado ${new Date().toLocaleString('pt-BR')}`;
-  document.getElementById('acum-badge').textContent = `${d.acum >= 0 ? '+' : ''}${d.acum.toFixed(1)}% período`;
+  dEl.textContent = `${d.varDia>=0?'▲':'▼'} ${Math.abs(d.varDia).toFixed(2)}% dia`;
+  dEl.className = 'hdelta ' + (d.varDia>=0?'pos':'neg');
+  document.getElementById('h-time').textContent = `Atualizado: ${d.lastUpdate}`;
+  document.getElementById('h-dy').textContent   = d.dy12m ? `${(d.dy12m*100).toFixed(1)}%` : '—';
+  document.getElementById('rb-txt').textContent  = `Dados carregados via Brapi · B3 · ${new Date().toLocaleString('pt-BR')}`;
+  document.getElementById('footer-ts').textContent = `Aberto em ${new Date().toLocaleString('pt-BR')}`;
+  document.getElementById('acum-badge').textContent = `${d.acum52w>=0?'+':''}${d.acum52w.toFixed(1)}% em 52 semanas`;
 
   renderVitais();
   renderPerformance();
@@ -540,244 +363,182 @@ function renderDashboard() {
   renderAlertas();
 }
 
-// ─── VITAIS ───────────────────────────────────────────────
+// ── VITAIS ──────────────────────────────────
 function renderVitais() {
-  const d = state;
-  const kpiEl = document.getElementById('vitais-kpis');
-  const varClass = d.varDia >= 0 ? 'pos' : 'neg';
-  kpiEl.innerHTML = `
-    ${kcard('Cotação Atual', `<span style="font-family:'JetBrains Mono',monospace">R$ ${d.cotacaoAtual.toFixed(2)}</span>`,
-      `Var. dia: <span class="${varClass}">${d.varDia >= 0?'+':''}${d.varDia.toFixed(2)}%</span>`)}
-    ${kcard('Retorno 3M', pct(d.m3Val), `Últimos 3 meses`)}
-    ${kcard('Acumulado (período)', pct(d.acum), `Desde ${fmtDate(state.allQ[0]?.d||'')}`)}
-    ${kcard('Vol. 3M', `${d.vol3m?.toFixed(1)||'—'}%`, 'Volatilidade anualizada')}
+  const d = S;
+  const vc = d.varDia>=0?'pos':'neg';
+  document.getElementById('vitais-kpis').innerHTML = `
+    ${kc('Cotação Atual', `<span style="font-family:'JetBrains Mono',monospace">R$ ${d.cotAtual.toFixed(2)}</span>`, `Var. dia: <span class="${vc}">${d.varDia>=0?'+':''}${d.varDia.toFixed(2)}%</span>`)}
+    ${kc('P/VP', d.pvp ? `<span class="${d.pvp>1.2?'wrn':d.pvp<0.9?'pos':'acc'}">${d.pvp.toFixed(2)}</span>` : '—', d.pvp ? (d.pvp < 1 ? 'Desconto ao NAV' : d.pvp > 1.2 ? 'Prêmio alto — atenção' : 'Leve prêmio ao NAV') : 'Não disponível')}
+    ${kc('DY 12M', d.dy12m ? `<span class="pos">${(d.dy12m*100).toFixed(1)}%</span>` : '—', 'Dividend yield anualizado')}
+    ${kc('Volume Médio', fmtVol(d.volume), 'Volume financeiro diário')}
   `;
 
-  // chart cotação
   if (chartCota) { chartCota.destroy(); chartCota = null; }
-  const mq = d.monthly;
   const ctx = document.getElementById('cotacaoChart');
+  const labels = d.prices.map(p => fmtDate(p.d));
+  const vals   = d.prices.map(p => p.c);
   chartCota = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: mq.map(q => fmtMonthShort(q.d)),
-      datasets: [{
-        data: mq.map(q => +q.c.toFixed(2)),
-        borderColor: '#c9a84c', borderWidth: 2.5,
-        pointBackgroundColor: '#c9a84c', pointRadius: 4,
-        fill: true,
-        backgroundColor: (c) => {
-          const g = c.chart.ctx.createLinearGradient(0,0,0,180);
-          g.addColorStop(0,'rgba(201,168,76,0.18)');g.addColorStop(1,'rgba(201,168,76,0)');return g;
-        },
-        tension: 0.35
-      }]
-    },
-    options: chartOpts(v => `R$ ${v.toFixed(2)}`, v => `R$ ${v.toFixed(0)}`)
+    type:'line',
+    data:{ labels, datasets:[{ data:vals, borderColor:'#c9a84c', borderWidth:2.5, pointRadius:2, fill:true,
+      backgroundColor: c => { const g=c.chart.ctx.createLinearGradient(0,0,0,190);g.addColorStop(0,'rgba(201,168,76,.18)');g.addColorStop(1,'rgba(201,168,76,0)');return g; },
+      tension:0.35 }] },
+    options: chartOpts(v=>`R$ ${v.toFixed(2)}`, v=>`R$ ${v.toFixed(0)}`)
   });
 
   document.getElementById('vitais-info').innerHTML = `
-    ${kcard('Tipo', info_field('tipoCota'), '')}
-    ${kcard('Situação', info_field('situacao'), '')}
-    ${kcard('Último dado', fmtDate(d.lastQuote), 'Data da última cota disponível')}
+    ${kc('Mín 52 semanas', `R$ ${d.cotMin52.toFixed(2)}`, d.distMin !== null ? `${d.distMin>=0?'+':''}${d.distMin.toFixed(1)}% da mín` : '')}
+    ${kc('Máx 52 semanas', `R$ ${d.cotMax52.toFixed(2)}`, d.distMax !== null ? `${d.distMax.toFixed(1)}% abaixo da máx` : '')}
+    ${kc('Cap. Mercado', fmtMktCap(d.mktCap), 'Patrimônio de mercado')}
   `;
 }
 
-function info_field(key) {
-  const i = state.info || {};
-  const map = {
-    tipoCota: i.type || 'FII',
-    situacao: i.situation || 'Em negociação',
-  };
-  return map[key] || '—';
-}
-
-// ─── PERFORMANCE ──────────────────────────────────────────
+// ── PERFORMANCE ─────────────────────────────
 function renderPerformance() {
-  const d = state;
+  const d = S;
+  const cotInicio = d.prices.length ? d.prices[0].c : d.cotAtual;
+  const cotMes    = d.prices.length >= 4 ? d.prices[d.prices.length-4].c : cotInicio;
+  const retMes    = cotMes ? (d.cotAtual - cotMes) / cotMes * 100 : 0;
+  const ret6m     = d.prices.length >= 26 ? (d.cotAtual - d.prices[d.prices.length-26].c) / d.prices[d.prices.length-26].c * 100 : null;
+
   document.getElementById('perf-top').innerHTML = `
-    ${kcard('MTD', pct(d.mtdVal), 'Mês atual')}
-    ${kcard('YTD', pct(d.ytdVal), 'Ano atual')}
-    ${kcard('Período (12M)', pct(d.acum), 'Desde início do histórico disponível')}
+    ${kc('Último Mês', pct(retMes), '~4 semanas')}
+    ${kc('6 Meses', ret6m !== null ? pct(ret6m) : '—', ret6m !== null ? '~26 semanas' : 'Histórico insuficiente')}
+    ${kc('52 Semanas', pct(d.acum52w), 'Retorno anual de preço')}
   `;
+  document.getElementById('perf-sub').textContent = d.prices.length ? `${fmtDate(d.prices[0].d)} → ${fmtDate(d.prices[d.prices.length-1].d)}` : '';
+  document.getElementById('perf-badge').textContent = `${d.prices.length} semanas de dados`;
 
-  const mr = d.monthRets;
-  document.getElementById('perf-sub').textContent =
-    mr.length ? `${mr[0].label} → ${mr[mr.length-1].label}` : '';
-  document.getElementById('perf-badge').textContent =
-    `${d.posMonths} pos · ${d.negMonths} neg de ${d.totalMonths} meses`;
-
-  if (chartMens) { chartMens.destroy(); chartMens = null; }
-  const ctx2 = document.getElementById('mensaisChart');
-  chartMens = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: mr.map(m => m.label),
-      datasets: [{
-        data: mr.map(m => +m.ret.toFixed(2)),
-        backgroundColor: mr.map(m => m.ret >= 0 ? 'rgba(59,186,138,0.72)' : 'rgba(224,92,92,0.72)'),
-        borderColor: mr.map(m => m.ret >= 0 ? '#3bba8a' : '#e05c5c'),
-        borderWidth: 1, borderRadius: 4
-      }]
-    },
-    options: chartOpts(v => `${v >= 0?'+':''}${v.toFixed(2)}%`, v => `${v}%`, true)
+  if (chartPerf) { chartPerf.destroy(); chartPerf = null; }
+  const ctx2 = document.getElementById('perfChart');
+  const base  = d.prices[0]?.c || 1;
+  chartPerf = new Chart(ctx2, {
+    type:'line',
+    data:{ labels: d.prices.map(p=>fmtDate(p.d)),
+      datasets:[{ label:'Cota', data:d.prices.map(p=>+((p.c/base*100).toFixed(2))),
+        borderColor:'#2563c4', borderWidth:2.5, pointRadius:2, fill:true,
+        backgroundColor: c=>{const g=c.chart.ctx.createLinearGradient(0,0,0,190);g.addColorStop(0,'rgba(37,99,196,.18)');g.addColorStop(1,'rgba(37,99,196,0)');return g;},
+        tension:0.35 }] },
+    options: chartOpts(v=>`${v.toFixed(1)} (base 100)`, v=>`${v.toFixed(0)}`)
   });
 
   document.getElementById('perf-bottom').innerHTML = `
-    ${kcard('Melhor Mês', pct(d.bestMonth,'pos'), '')}
-    ${kcard('Pior Mês', pct(d.worstMonth,'neg'), '')}
-    ${kcard('Meses +', `<span class="pos">${d.posMonths}</span>`, `de ${d.totalMonths} meses`)}
-    ${kcard('Meses −', `<span class="neg">${d.negMonths}</span>`, `de ${d.totalMonths} meses`)}
+    ${kc('Mín 52 sem', `R$ ${d.cotMin52.toFixed(2)}`, 'Menor preço do ano')}
+    ${kc('Máx 52 sem', `R$ ${d.cotMax52.toFixed(2)}`, 'Maior preço do ano')}
+    ${kc('Amplitude', `${((d.cotMax52-d.cotMin52)/d.cotMin52*100).toFixed(1)}%`, 'Máx vs Mín — volatilidade observada')}
+    ${kc('Drawdown Máx', `<span class="neg">${d.maxDD.toFixed(1)}%</span>`, 'Maior queda do pico')}
   `;
 }
 
-// ─── RISCO ────────────────────────────────────────────────
+// ── RISCO ────────────────────────────────────
 function renderRisco() {
-  const d = state;
-  const sh = d.sharpe3m, so = d.sortino3m, vo = d.vol3m;
+  const d = S;
+  const volOk = d.vol !== null && d.vol < 15;
+  const pvpOk = d.pvp !== null && d.pvp < 1.2;
+  const ddOk  = d.maxDD > -15;
 
-  const gaugeColor = (v, inverted=false) => {
-    if (v === null || v === undefined) return '#5a7a9a';
-    if (inverted) return v < 10 ? '#3bba8a' : v < 18 ? '#f0a500' : '#e05c5c';
-    return v > 1 ? '#3bba8a' : v > 0 ? '#f0a500' : '#e05c5c';
-  };
-
-  document.getElementById('risco-gauges').innerHTML = `
-    ${gaugeCard('Sharpe 3M', sh, gaugeColor(sh), chip(sh > 1 ? 'ok' : sh > 0 ? 'warn' : 'danger', sh > 1 ? 'Bom' : sh > 0 ? 'Fraco' : 'Negativo'))}
-    ${gaugeCard('Sortino 3M', so, gaugeColor(so), chip(so > 1 ? 'ok' : so > 0 ? 'warn' : 'danger', so > 1 ? 'Bom' : so > 0 ? 'Fraco' : 'Negativo'))}
-    ${gaugeCard('Volatilidade 3M', vo, gaugeColor(vo, true), (vo !== null && vo !== undefined ? vo.toFixed(1)+'%' : '—') + ' a.a.', true)}
+  document.getElementById('risco-cards').innerHTML = `
+    ${kc('Volatilidade 52s', d.vol !== null ? `<span class="${d.vol<10?'pos':d.vol<20?'wrn':'neg'}">${d.vol.toFixed(1)}%</span>` : '—',
+      d.vol !== null ? (d.vol<10?'Baixa — comportamento estável':d.vol<20?'Moderada — normal para FII':d.vol<30?'Alta — monitorar':'Muito alta') : 'Insuficiente')}
+    ${kc('Drawdown Máximo', `<span class="${d.maxDD>-10?'wrn':'neg'}">${d.maxDD.toFixed(1)}%</span>`, 'Maior queda do pico no período')}
+    ${kc('P/VP', d.pvp ? `<span class="${d.pvp<0.9?'pos':d.pvp<1.2?'acc':'wrn'}">${d.pvp.toFixed(2)}</span>` : '—',
+      d.pvp ? (d.pvp<1?'Desconto — potencial de entrada':d.pvp<1.2?'Leve prêmio':'Prêmio alto — atenção') : 'Não disponível')}
   `;
 
-  // semas
-  const items = [
-    { c: sh > 0, label: 'Sharpe 3M', desc: sh > 0 ? 'Retorno compensa o risco no trimestre' : 'Retorno abaixo do risco assumido — pressão recente' },
-    { c: so > 0, label: 'Sortino 3M', desc: so > 0 ? 'Risco de queda controlado' : 'Quedas recentes puxam o ratio para baixo' },
-    { c: vo < 15, label: 'Volatilidade 3M', desc: vo < 10 ? 'Baixa — comportamento estável' : vo < 15 ? 'Moderada — dentro do aceitável' : 'Alta — monitorar' },
-    { c: d.acum > 8, label: 'Retorno 12M', desc: d.acum > 8 ? 'Retorno acima do CDI estimado para o período' : 'Retorno abaixo do CDI — avaliar manutenção' },
-    { c: d.negMonths / Math.max(d.totalMonths,1) < 0.3, label: '% Meses negativos', desc: `${d.negMonths} de ${d.totalMonths} meses (${(d.negMonths/Math.max(d.totalMonths,1)*100).toFixed(0)}%) — ${d.negMonths/Math.max(d.totalMonths,1) < 0.3 ? 'aceitável' : 'acima do ideal'}` },
+  const semas = [
+    { ok: volOk, kpi:'Volatilidade', desc: d.vol !== null ? (d.vol<10?'Baixa — estável':d.vol<20?'Moderada — aceitável':'Alta — monitorar') : 'Dados insuficientes' },
+    { ok: ddOk,  kpi:'Drawdown máximo', desc: `${d.maxDD.toFixed(1)}% de queda máxima — ${d.maxDD>-10?'controlado':'relevante, investigar'}` },
+    { ok: pvpOk, kpi:'P/VP', desc: d.pvp ? (d.pvp<1?`${d.pvp.toFixed(2)} — desconto ao valor patrimonial (oportunidade)`:d.pvp<1.2?`${d.pvp.toFixed(2)} — leve prêmio, aceitável`:`${d.pvp.toFixed(2)} — prêmio alto, atenção`) : 'Não disponível' },
+    { ok: d.acum52w > 6, kpi:'Retorno 52 semanas', desc: `${d.acum52w>=0?'+':''}${d.acum52w.toFixed(1)}% — ${d.acum52w>10?'acima do CDI estimado':d.acum52w>6?'próximo ao CDI':d.acum52w>0?'positivo mas abaixo do CDI':'negativo no período'}` },
+    { ok: d.dy12m && d.dy12m*100 > 8, kpi:'DY 12M', desc: d.dy12m ? `${(d.dy12m*100).toFixed(1)}% — ${d.dy12m*100>10?'excelente renda':d.dy12m*100>8?'boa renda':d.dy12m*100>6?'renda moderada':'renda baixa para FII'}` : 'Não disponível' },
   ];
+
   document.getElementById('risco-semas').innerHTML =
-    '<div class="cbox-title" style="margin-bottom:14px">Leitura dos Indicadores</div>' +
-    items.map(i => `<div class="sema"><div class="sema-dot" style="background:${i.c?'var(--green)':'var(--red)'}"></div><div class="sema-kpi">${i.label}</div><div class="sema-desc">${i.desc}</div></div>`).join('');
+    '<div style="font-size:13px;font-weight:700;margin-bottom:14px">Leitura dos Indicadores</div>' +
+    semas.map(s=>`<div class="sema"><div class="sema-dot" style="background:${s.ok?'var(--green)':'var(--red)'}"></div><div class="sema-kpi">${s.kpi}</div><div class="sema-desc">${s.desc}</div></div>`).join('');
 
   document.getElementById('risco-bottom').innerHTML = `
-    ${kcard('% Meses Positivos', `<span class="pos">${(d.posMonths/Math.max(d.totalMonths,1)*100).toFixed(0)}%</span>`, `${d.posMonths} de ${d.totalMonths} meses`)}
-    ${kcard('Melhor vs Pior', `<span class="pos">${d.bestMonth.toFixed(2)}%</span> / <span class="neg">${d.worstMonth.toFixed(2)}%</span>`, 'Amplitude dos retornos mensais')}
+    ${kc('Dist. da Mínima', d.distMin!==null?`<span class="pos">${d.distMin>=0?'+':''}${d.distMin.toFixed(1)}%</span>`:'—', 'Quanto subiu da mínima 52s')}
+    ${kc('Dist. da Máxima', d.distMax!==null?`<span class="${d.distMax<-20?'neg':d.distMax<-10?'wrn':'pos'}">${d.distMax.toFixed(1)}%</span>`:'—', 'Quanto está abaixo da máxima 52s')}
   `;
-  document.getElementById('risco-note').innerHTML =
-    'ℹ️ Dados históricos limitados ao último ano pelo plano atual do Mais Retorno. Planos superiores liberam Sharpe/Sortino de 24–60 meses.';
 }
 
-// ─── ALERTAS ──────────────────────────────────────────────
+// ── ALERTAS ──────────────────────────────────
 function renderAlertas() {
-  const d = state;
-  const sh = d.sharpe3m, so = d.sortino3m, vo = d.vol3m;
-
+  const d = S;
+  const dy = d.dy12m ? d.dy12m*100 : null;
   const alerts = [
-    { lvl: sh > 0 ? 'ok' : 'danger', msg: `<strong>Sharpe 3M = ${sh?.toFixed(2)||'—'}</strong> — ${sh > 1 ? 'Retorno bem compensado pelo risco.' : sh > 0 ? 'Retorno positivo mas abaixo do ideal.' : 'Negativo — retorno recente não remunera o risco. Investigar causa.'}` },
-    { lvl: so > 0 ? 'ok' : 'danger', msg: `<strong>Sortino 3M = ${so?.toFixed(2)||'—'}</strong> — ${so > 1 ? 'Risco de queda controlado.' : so > 0 ? 'Risco de queda moderado.' : 'Negativo — quedas recentes pesam no indicador. Monitorar.'}` },
-    { lvl: vo < 15 ? 'ok' : vo < 20 ? 'warn' : 'danger', msg: `<strong>Volatilidade 3M = ${vo?.toFixed(1)||'—'}%</strong> — ${vo < 10 ? 'Baixa — comportamento estável.' : vo < 15 ? 'Moderada — dentro do aceitável para FII.' : 'Alta — acima do esperado para esta categoria.'}` },
-    { lvl: d.acum > 6 ? 'ok' : 'warn', msg: `<strong>Retorno acumulado = ${d.acum.toFixed(2)}%</strong> no período disponível (${d.totalMonths} meses).` },
-    { lvl: d.mtdVal >= -2 ? (d.mtdVal >= 0 ? 'ok' : 'warn') : 'danger', msg: `<strong>MTD = ${d.mtdVal.toFixed(2)}%</strong> — ${d.mtdVal >= 0 ? 'Mês positivo.' : d.mtdVal >= -2 ? 'Queda moderada no mês — monitorar.' : 'Queda relevante — investigar fundamento.'}` },
-    { lvl: d.negMonths / Math.max(d.totalMonths,1) < 0.3 ? 'ok' : 'warn', msg: `<strong>${d.negMonths} meses negativos de ${d.totalMonths}</strong> (${(d.negMonths/Math.max(d.totalMonths,1)*100).toFixed(0)}%) — ${d.negMonths/Math.max(d.totalMonths,1) < 0.3 ? 'consistência aceitável.' : 'frequência acima do ideal.'}` },
+    { lvl: d.varDia>=-2?'ok':d.varDia>=-4?'warn':'danger', msg:`<strong>Variação diária: ${d.varDia>=0?'+':''}${d.varDia.toFixed(2)}%</strong> — ${d.varDia>=-2?'dentro do normal':d.varDia>=-4?'queda moderada — monitorar':'queda relevante — investigar'}` },
+    { lvl: d.pvp===null?'warn':d.pvp<0.9?'ok':d.pvp<1.2?'ok':'warn', msg:`<strong>P/VP = ${d.pvp?d.pvp.toFixed(2):'—'}</strong> — ${d.pvp===null?'não disponível':d.pvp<1?'desconto ao NAV — potencial oportunidade':d.pvp<1.2?'leve prêmio — aceitável':'prêmio alto, avaliar entrada'}` },
+    { lvl: dy===null?'warn':dy>8?'ok':dy>6?'warn':'danger', msg:`<strong>DY 12M = ${dy?dy.toFixed(1)+'%':'—'}</strong> — ${dy===null?'não disponível':dy>10?'excelente renda':dy>8?'boa renda':dy>6?'renda moderada':'abaixo do esperado para FII'}` },
+    { lvl: d.vol===null?'warn':d.vol<15?'ok':d.vol<25?'warn':'danger', msg:`<strong>Volatilidade = ${d.vol?d.vol.toFixed(1)+'%':'—'}</strong> anualizada — ${d.vol===null?'não calculável':d.vol<10?'baixa':d.vol<15?'moderada — dentro do aceitável':d.vol<25?'alta — monitorar':'muito alta'}` },
+    { lvl: d.maxDD>-10?'ok':d.maxDD>-20?'warn':'danger', msg:`<strong>Drawdown máximo = ${d.maxDD.toFixed(1)}%</strong> — ${d.maxDD>-10?'controlado':d.maxDD>-20?'relevante — monitorar':'alto — investigar fundamento'}` },
+    { lvl: d.acum52w>6?'ok':d.acum52w>0?'warn':'danger', msg:`<strong>Retorno 52 semanas = ${d.acum52w>=0?'+':''}${d.acum52w.toFixed(1)}%</strong> — ${d.acum52w>10?'acima do CDI':d.acum52w>6?'próximo ao CDI':d.acum52w>0?'positivo mas abaixo do CDI':'negativo no período — atenção'}` },
   ];
 
   document.getElementById('alertas-list').innerHTML =
-    alerts.map(a => `<div class="alert al-${a.lvl}"><div class="al-icon">${a.lvl==='ok'?'✓':a.lvl==='warn'?'⚠':'✕'}</div><div>${a.msg}</div></div>`).join('');
+    alerts.map(a=>`<div class="alert al-${a.lvl}"><div class="al-icon">${a.lvl==='ok'?'✓':a.lvl==='warn'?'⚠':'✕'}</div><div>${a.msg}</div></div>`).join('');
 
   const rows = [
-    { kpi:'Sharpe 3M',   atual: sh?.toFixed(2)||'—', wa:'< 0.3', cr:'< 0',    lvl: sh > 0.3 ? 'ok' : sh > 0 ? 'warn' : 'danger' },
-    { kpi:'Sortino 3M',  atual: so?.toFixed(2)||'—', wa:'< 0.3', cr:'< 0',    lvl: so > 0.3 ? 'ok' : so > 0 ? 'warn' : 'danger' },
-    { kpi:'Volatilidade 3M', atual:`${vo?.toFixed(1)||'—'}%`, wa:'> 15%', cr:'> 20%', lvl: vo<15?'ok':vo<20?'warn':'danger' },
-    { kpi:'Retorno MTD',  atual:`${d.mtdVal.toFixed(2)}%`, wa:'< −2%', cr:'< −4%', lvl: d.mtdVal>=-2?'ok':d.mtdVal>=-4?'warn':'danger' },
-    { kpi:'Meses negativos', atual:`${d.negMonths}/${d.totalMonths}`, wa:'> 30%', cr:'> 50%', lvl: d.negMonths/Math.max(d.totalMonths,1)<0.3?'ok':d.negMonths/Math.max(d.totalMonths,1)<0.5?'warn':'danger' },
-    { kpi:'Retorno 12M (est.)', atual:`${d.acum.toFixed(2)}%`, wa:'< 6%', cr:'< 3%', lvl: d.acum>=6?'ok':d.acum>=3?'warn':'danger' },
+    { kpi:'Var. Diária', atual:`${d.varDia>=0?'+':''}${d.varDia.toFixed(2)}%`, wa:'< −2%', cr:'< −4%', lvl:d.varDia>=-2?'ok':d.varDia>=-4?'warn':'danger' },
+    { kpi:'P/VP', atual:d.pvp?d.pvp.toFixed(2):'—', wa:'> 1.20', cr:'> 1.35', lvl:d.pvp===null?'warn':d.pvp<1.2?'ok':'warn' },
+    { kpi:'DY 12M', atual:dy?`${dy.toFixed(1)}%`:'—', wa:'< 6%', cr:'< 4%', lvl:dy===null?'warn':dy>6?'ok':dy>4?'warn':'danger' },
+    { kpi:'Volatilidade', atual:d.vol?`${d.vol.toFixed(1)}%`:'—', wa:'> 15%', cr:'> 25%', lvl:d.vol===null?'warn':d.vol<15?'ok':d.vol<25?'warn':'danger' },
+    { kpi:'Drawdown Máx', atual:`${d.maxDD.toFixed(1)}%`, wa:'< −10%', cr:'< −20%', lvl:d.maxDD>-10?'ok':d.maxDD>-20?'warn':'danger' },
+    { kpi:'Retorno 52s', atual:`${d.acum52w>=0?'+':''}${d.acum52w.toFixed(1)}%`, wa:'< 6%', cr:'< 0%', lvl:d.acum52w>6?'ok':d.acum52w>0?'warn':'danger' },
   ];
 
-  const tbody = rows.map(r => {
-    const cl = r.lvl==='ok'?'ch-ok':r.lvl==='warn'?'ch-warn':'ch-danger';
-    const lbl = r.lvl==='ok'?'OK':r.lvl==='warn'?'Atenção':'Crítico';
-    const vc = r.lvl==='ok'?'pos':r.lvl==='warn'?'warn':'neg';
-    return `<tr><td><strong>${r.kpi}</strong></td><td class="mono ${vc}">${r.atual}</td><td class="mono">${r.wa}</td><td class="mono">${r.cr}</td><td><span class="chip ${cl}">${lbl}</span></td></tr>`;
-  }).join('');
   document.getElementById('alertas-table').innerHTML =
-    `<tr><th>KPI</th><th>Atual</th><th>⚠ Atenção</th><th>✕ Crítico</th><th>Status</th></tr>` + tbody;
+    `<tr><th>KPI</th><th>Atual</th><th>⚠ Atenção</th><th>✕ Crítico</th><th>Status</th></tr>` +
+    rows.map(r=>{
+      const cl=r.lvl==='ok'?'ch-ok':r.lvl==='warn'?'ch-warn':'ch-danger';
+      const lbl=r.lvl==='ok'?'OK':r.lvl==='warn'?'Atenção':'Crítico';
+      const vc=r.lvl==='ok'?'pos':r.lvl==='warn'?'wrn':'neg';
+      return `<tr><td><strong>${r.kpi}</strong></td><td class="mono ${vc}">${r.atual}</td><td class="mono">${r.wa}</td><td class="mono">${r.cr}</td><td><span class="chip ${cl}">${lbl}</span></td></tr>`;
+    }).join('');
 }
 
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // HELPERS
-// ════════════════════════════════════════════════════════════
-function kcard(lbl, val, sub) {
-  return `<div class="card"><div class="c-lbl">${lbl}</div><div class="c-val">${val}</div>${sub?`<div class="c-sub">${sub}</div>`:''}</div>`;
+// ══════════════════════════════════════════════
+function kc(lbl, val, sub) {
+  return `<div class="card"><div class="clbl">${lbl}</div><div class="cval">${val}</div>${sub?`<div class="csub">${sub}</div>`:''}</div>`;
 }
-
-function pct(v, forceClass) {
-  if (v === null || v === undefined) return '—';
-  const c = forceClass || (v >= 0 ? 'pos' : 'neg');
-  return `<span class="${c}">${v>=0?'+':''}${v.toFixed(2)}%</span>`;
+function pct(v) {
+  if (v===null||v===undefined) return '—';
+  return `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${v.toFixed(2)}%</span>`;
 }
-
-function chip(type, label) {
-  const m = { ok:'ch-ok', warn:'ch-warn', danger:'ch-danger' };
-  return `<span class="chip ${m[type]}">${label}</span>`;
-}
-
-function gaugeCard(label, val, color, extra, inverted=false) {
-  const safeVal = (val !== null && val !== undefined) ? val : 0;
-  const min = inverted ? 0 : -2, max = inverted ? 25 : 2;
-  const frac = Math.max(0, Math.min(1, (safeVal - min) / (max - min)));
-  const angle = -135 + frac * 270;
-  const r = 44, cx = 60, cy = 60;
-  const toXY = deg => ({ x: cx + r * Math.cos(deg * Math.PI / 180), y: cy + r * Math.sin(deg * Math.PI / 180) });
-  const start = toXY(-135), end = toXY(135), cur = toXY(angle);
-  const large = frac > 0.5 ? 1 : 0;
-  return `<div class="card gauge-wrap">
-    <div class="c-lbl">${label}</div>
-    <svg width="120" height="78" viewBox="0 0 120 78">
-      <path d="M ${start.x} ${start.y} A ${r} ${r} 0 1 1 ${end.x} ${end.y}" fill="none" stroke="#1e2a38" stroke-width="9" stroke-linecap="round"/>
-      <path d="M ${start.x} ${start.y} A ${r} ${r} 0 ${large} 1 ${cur.x} ${cur.y}" fill="none" stroke="${color}" stroke-width="9" stroke-linecap="round"/>
-      <text x="${cx}" y="${cy+6}" text-anchor="middle" font-size="14" font-weight="700" fill="${color}">${val !== null && val !== undefined ? (inverted ? val.toFixed(1)+'%' : val.toFixed(2)) : '—'}</text>
-    </svg>
-    <div class="gauge-sub">${extra}</div>
-  </div>`;
-}
-
 function fmtDate(d) {
-  if (!d) return '—';
-  const [y,m,day] = d.split('-');
-  return `${day}/${m}/${y}`;
-}
-
-function fmtMonthShort(d) {
   if (!d) return '';
-  const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  const [y,m] = d.split('-');
-  return `${months[+m-1]}/${String(y).slice(2)}`;
+  const [y,m,day] = d.split('-');
+  return `${day}/${m}/${String(y).slice(2)}`;
 }
-
-function chartOpts(tooltipFmt, yFmt, isBar=false) {
+function fmtVol(v) {
+  if (!v) return '—';
+  if (v >= 1e9) return `R$ ${(v/1e9).toFixed(1)}B`;
+  if (v >= 1e6) return `R$ ${(v/1e6).toFixed(1)}M`;
+  return `R$ ${v.toLocaleString('pt-BR')}`;
+}
+function fmtMktCap(v) {
+  if (!v) return '—';
+  if (v >= 1e9) return `R$ ${(v/1e9).toFixed(1)}B`;
+  if (v >= 1e6) return `R$ ${(v/1e6).toFixed(1)}M`;
+  return `—`;
+}
+function chartOpts(tooltipFmt, yFmt) {
   return {
-    responsive: true, maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: '#0d1b2a', borderColor: '#1e3a5f', borderWidth: 1,
-        titleColor: '#7a8fa6', bodyColor: '#c8d8ea',
-        callbacks: { label: c => tooltipFmt(c.raw) }
-      }
-    },
-    scales: {
-      x: { grid: { color: '#1e3a5f', display: !isBar }, ticks: { color: '#5a7a9a', font: { size: 10 } } },
-      y: { grid: { color: '#1e3a5f' }, ticks: { color: '#5a7a9a', font: { size: 10 }, callback: yFmt } }
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0d1b2a', borderColor:'#1e3a5f', borderWidth:1, titleColor:'#7a8fa6', bodyColor:'#c8d8ea', callbacks:{label:c=>tooltipFmt(c.raw)} } },
+    scales:{
+      x:{grid:{color:'#1e3a5f'}, ticks:{color:'#5a7a9a',font:{size:10},maxTicksLimit:12}},
+      y:{grid:{color:'#1e3a5f'}, ticks:{color:'#5a7a9a',font:{size:10},callback:yFmt}}
     }
   };
 }
-
-// ─── TABS ─────────────────────────────────────────────────
 function showTab(id, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
   btn.classList.add('active');
 }
 </script>
